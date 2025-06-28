@@ -1,21 +1,26 @@
-import { useParams } from "react-router-dom";
-import { books } from "../data/books";
+
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { booksData } from '../data/books';
 
 const BookDetails = () => {
   const { id } = useParams();
-  if (!books || !Array.isArray(books)) return <p>Book data not available</p>;
-  const book = books.find((b) => String(b.id) === String(id));
+  const book = booksData.find(book => book.id === parseInt(id));
 
-  if (!book) return <p>Book not found</p>;
+  if (!book) return <div className="p-8">Book not found</div>;
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-semibold mb-2">{book.title}</h2>
-      <img src={book.image} alt={book.title} className="w-64 mb-4" />
-      <p><strong>Author:</strong> {book.author}</p>
-      <p><strong>Genre:</strong> {book.genre}</p>
-      <p className="mt-4">{book.description}</p>
-    </div>
+    <main className="p-8">
+      <div className="flex flex-col md:flex-row gap-6">
+        <img src={book.cover} alt={book.title} className="w-64 h-96 object-cover" />
+        <div>
+          <h2 className="text-3xl font-bold">{book.title}</h2>
+          <p className="text-xl text-gray-600">by {book.author}</p>
+          <p className="mt-4">{book.description}</p>
+          <p className="mt-2 font-semibold">${book.price}</p>
+        </div>
+      </div>
+    </main>
   );
 };
 
